@@ -1,11 +1,10 @@
 from __future__ import annotations
 
-import os
 from pathlib import Path
 
+import pytest
 
-def pytest_configure() -> None:
-    index_path = Path(
-        os.environ.get("PYTEST_CURRENT_TEST_INDEX", "/private/tmp/ml_pytest_runs.json")
-    )
-    os.environ["MICROSTRUCTURE_LAB_RUN_INDEX"] = str(index_path)
+
+@pytest.fixture(autouse=True)
+def isolate_run_index(monkeypatch: pytest.MonkeyPatch, tmp_path: Path) -> None:
+    monkeypatch.setenv("MICROSTRUCTURE_LAB_RUN_INDEX", str(tmp_path / "run_index.json"))
