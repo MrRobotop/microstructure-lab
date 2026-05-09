@@ -1,0 +1,31 @@
+.DS_Store
+.env
+
+# Local agent prompts and operating notes.
+AGENTS.md
+prompts.md
+readme-prompts.md
+
+.venv/
+venv/
+__pycache__/
+*.py[cod]
+*.so
+*.dylib
+*.egg-info/
+.pytest_cache/
+.ruff_cache/
+.mypy_cache/
+build/
+dist/
+cmake-build-*/
+
+# Generated project artifacts. Keep directory placeholders tracked.
+artifacts/runs/*
+artifacts/reports/*
+data/synthetic/*
+data/sample/*
+!artifacts/runs/.gitkeep
+!artifacts/reports/.gitkeep
+!data/synthetic/.gitkeep
+!data/sample/.gitkeep

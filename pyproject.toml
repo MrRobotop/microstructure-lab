@@ -1,0 +1,82 @@
+[build-system]
+requires = ["scikit-build-core>=0.10", "pybind11>=2.12"]
+build-backend = "scikit_build_core.build"
+
+[project]
+name = "microstructure-lab"
+version = "0.1.0"
+description = "C++ and Python market microstructure research and execution simulation platform."
+readme = "README.md"
+requires-python = ">=3.11"
+license = { text = "MIT" }
+authors = [
+  { name = "Rishabh Patil" }
+]
+dependencies = [
+  "numpy>=1.26",
+  "pandas>=2.2",
+  "pydantic>=2.7",
+  "typer>=0.12",
+]
+
+[project.urls]
+Repository = "https://github.com/MrRobotop/microstructure-lab"
+
+[project.optional-dependencies]
+dev = [
+  "cmake>=3.20",
+  "fastapi>=0.115",
+  "httpx>=0.27",
+  "mypy>=1.11",
+  "ninja>=1.11",
+  "pytest>=8.0",
+  "ruff>=0.6",
+  "uvicorn>=0.30",
+]
+api = [
+  "fastapi>=0.115",
+  "uvicorn>=0.30",
+]
+dashboard = [
+  "streamlit>=1.37",
+]
+all = [
+  "microstructure-lab[api,dashboard,dev]",
+]
+
+[project.scripts]
+microstructure-lab = "microstructure_lab.cli:app"
+
+[tool.scikit-build]
+minimum-version = "build-system.requires"
+build-dir = "build/{wheel_tag}"
+wheel.packages = ["src/microstructure_lab"]
+cmake.version = ">=3.20"
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "-ra"
+
+[tool.ruff]
+line-length = 100
+target-version = "py311"
+src = ["src", "tests", "api", "dashboard", "benchmarks"]
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "UP", "B"]
+ignore = []
+
+[tool.ruff.format]
+quote-style = "double"
+indent-style = "space"
+
+[tool.mypy]
+python_version = "3.11"
+files = ["src/microstructure_lab", "api", "dashboard"]
+pretty = true
+show_error_codes = true
+warn_unused_configs = true
+
+[[tool.mypy.overrides]]
+module = ["streamlit", "streamlit.*"]
+ignore_missing_imports = true
